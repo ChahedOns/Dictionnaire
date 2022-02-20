@@ -1,0 +1,23 @@
+# depslib dependency file v1.0
+1645357046 source:c:\users\mloul\desktop\1ing\s1\algo\dictionnaire\main.c
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<string.h>
+	"dico.h"
+
+1645351869 source:c:\users\mloul\desktop\1ing\s1\algo\dictionnaire\arbre.c
+	<stdio.h>
+	<stdlib.h>
+	"arbre.h"
+
+1645354732 c:\users\mloul\desktop\1ing\s1\algo\dictionnaire\dico.h
+
+1645354927 source:c:\users\mloul\desktop\1ing\s1\algo\dictionnaire\dico.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"dico.h"
+
+1644943180 c:\users\mloul\desktop\1ing\s1\algo\dictionnaire\arbre.h
+
