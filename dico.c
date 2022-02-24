@@ -6,11 +6,13 @@
 #include "dico.h"
 
 
+
+
 void dicoAfficher(Arbre a){
 
-    char ch[]= "";
+    char ch[]="";
     int i=0;
-    Arbre p , aux ;
+    Arbre p=NULL , aux ;
     ch[i]=a->c;
     i++;
     p= a->FG;
@@ -22,7 +24,7 @@ void dicoAfficher(Arbre a){
                 i++;
                 aux=p->FG;
                 //affichage de la partie gauche !
-                while ( aux->c !="\0" ){
+                while ( aux->c !='\0' ){
                     *(ch+i) = aux->c;
                     i++;
                     aux= aux->FG;
@@ -31,78 +33,86 @@ void dicoAfficher(Arbre a){
                 p=p->FG;
                 //initialiser la chaine
                 for (int j=1;j<i;j++){
-                     *(ch+j) = (char)"";
+                     *(ch+j) =' ' /*(char)""*/;
                 }
 
             }else
             {   for (int j=1;j<i;j++){
-                    *(ch+j) = (char)"";}
+                    *(ch+j) = ' '/*(char)""*/;}
                 p=p->FD;
             }
         }else{
             for (int j=0;j<i;j++){
-                *(ch+j) = (char)"";}
+                *(ch+j) = ' '/*(char)""*/;}
             p=a->FD;}
     }
 }
 
-void dicoInsererMot(char mot[], Arbre a /*passage par variable*/ ){
+void dicoInsererMot(char mot[], Arbre* a /*passage par variable*/ ){
     char rest[strlen(mot)];
-    Arbre m=arbreCons(mot[1],0,NULL,NULL);
-        if ( a->c == m->c){
+        Arbre m=arbreCons(mot[1],0,NULL,NULL);
+        if ( (*a)->c == m->c){
             //même lettre je passe  gauche
             strncpy(rest,mot+1,strlen(mot)-1);
             free(m);
-            dicoInsererMot(rest , a->FG);}
-        else if (a->c < m->c){
+            dicoInsererMot(rest , (*a)->FG);}
+        else if ((*a)->c < m->c){
                 //Recherche la bonne place à droite!
-            if (a->FD == NULL){
+            if ((*a)->FD == NULL){
                     //Nouvelle mot a droite!
-                    a->FD=m;
-                    Arbre c =m;
+                    (*a)->FD=m;
+                    Arbre c = m;
                     //Place bien trouvée! j'ajoute le rest !
-                    while (strcmp(rest,"") != 0){
-                        strncpy(rest,mot+1,strlen(mot)-1);
-                        Arbre aux = arbreCons(rest[1],0,NULL,NULL);
+                    int i= 0;
+                    while (i<strlen(mot)){
+                        Arbre aux = arbreCons(mot[i],0,NULL,NULL);
                         c->FG = aux;
                         c=aux;
+                        i++;
                         }
                     //dernier noeud doit être \0
-                    Arbre last =arbreCons("\0",1,NULL,NULL);
+                    Arbre last =arbreCons('\0',1,NULL,NULL);
                     c->FG = last;}
             else{
                 //suppéieur et not égal la racine je passe a droite(recherche la bonne place)
-                a=a->FD;}
+                *(a)=(*a)->FD;}
         }
 }
 
 int dicoNbOcc(char mot[], Arbre a){
 char rest[strlen(mot)];
-   if (mot == "")
+   if (strcmp(mot,"")==0)
         return 1;
    else{
-        if ( a->c == mot[1]){
-            strncpy(rest,mot+1,strlen(mot)-1);
+        if ( a->c == mot[0]){
+            //strncpy(rest,mot+1,strlen(mot)-1);
             return dicoNbOcc(rest,a->FG);}
-        else if (a->c < mot[1]){
-            return dicoNbOcc(mot , a->FD);}
-    }
+        else if (a->c < mot[0]){
+            return dicoNbOcc(mot , a->FD);
+            }
+        else return 0;
+        }
 }
 
 //non compléte!
-int dicoNbMotsDifferents(Arbre a){
-}
-dicoNbMotsTotal(Arbre a){
-    if (a->c == "\0")
+//int dicoNbMotsDifferents(Arbre a){
+//}
+int dicoNbMotsTotal(Arbre a){
+    if (a->c == '\0')
         return 1;
     else
         return (dicoNbMotsTotal(a->FG)+dicoNbMotsTotal(a->FD));
+}
+int nombreAleatoire(int nombreMax)
+{
+ srand(time(NULL));
+ return (rand() % nombreMax);
 }
 
 int piocherMot(char *motPioche)
 {
      FILE* dico = NULL; // Le pointeur de fichier qui va contenir notre fichier
-     int nombreMots = 0, numMotChoisi = 0, i = 0;
+     int nombreMots = 0, numMotChoisi = 0;
      int caractereLu = 0;
      dico = fopen("dico.txt", "r"); // On ouvre le dictionnaire en lecture seule
      // On vérifie si on a réussi à ouvrir le dictionnaire
@@ -137,8 +147,8 @@ int piocherMot(char *motPioche)
      fclose(dico);
      return 1; // Tout s'est bien passé, on retourne 1
 }
-int nombreAleatoire(int nombreMax)
-{
- srand(time(NULL));
- return (rand() % nombreMax);
+void printArbre(Arbre a){
+    printf("%c",a->c);
+    printArbre(a->FG);
+    printArbre(a->FD);
 }

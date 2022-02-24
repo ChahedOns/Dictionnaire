@@ -31,6 +31,7 @@ int main()
     strcpy(buffer, "al");
     dicoInsererMot(buffer, &dico);
     dicoAfficher(dico); printf("\n");
+    printArbre(dico);
     printf("\"%s\" \t -> %d\n", "gallon", dicoNbOcc("gallon",dico));
     printf("\"%s\" \t\t -> %d\n", "mumu", dicoNbOcc("mumu",dico));
     printf("\"%s\" \t -> %d\n", "munier", dicoNbOcc("munier",dico));
