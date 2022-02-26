@@ -50,7 +50,7 @@ void dicoInsererMot(char mot[], Arbre* a,int len,int cpt){
 Arbre aux = *a;
 
 if(len == -1){
-    aux->FG = arbreCons('\0', 0, NULL, NULL);
+    aux->FD = arbreCons('\0', 0, NULL, NULL);
     return;
 }else if(cpt == 0){
     if(aux->c != mot[0]){
@@ -59,6 +59,7 @@ if(len == -1){
         tracker = aux;
         aux = aux->FD;
     }
+
     if(aux->c < mot[0] && aux->FD == NULL){
         aux->FD = arbreCons(mot[cpt],0,NULL,NULL);
         dicoInsererMot(mot,&aux->FD,len-1,cpt+1);
@@ -75,7 +76,6 @@ if(len == -1){
 
     }
 }else{
-    if(aux->c == mot[cpt-1]){
         if(aux->FG==NULL){
             aux->FG = arbreCons(mot[cpt],0,NULL,NULL);
             dicoInsererMot(mot,&aux->FG,len-1,cpt+1);
@@ -87,14 +87,13 @@ if(len == -1){
         }
     }
 }
-}
 
 void printPreorder(Arbre a)
 {
     if (a == NULL)
         return;
 
-    printf("%c ", a->c);
+    printf("%c", a->c);
 
     printPreorder(a->FG);
 
