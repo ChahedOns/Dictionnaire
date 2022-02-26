@@ -21,24 +21,24 @@
 
 1644943180 c:\users\mloul\desktop\1ing\s1\algo\dictionnaire\arbre.h
 
-1645430193 source:c:\users\hp\desktop\dictionnaire-master\arbre.c
+1645862905 source:c:\users\hp\desktop\dictionnaire-master\arbre.c
 	<stdio.h>
 	<stdlib.h>
 	"arbre.h"
 
 1645357694 c:\users\hp\desktop\dictionnaire-master\arbre.h
 
-1645437404 source:c:\users\hp\desktop\dictionnaire-master\dico.c
+1645875178 source:c:\users\hp\desktop\dictionnaire-master\dico.c
 	<stdio.h>
 	<stdlib.h>
 	<time.h>
 	<string.h>
 	"dico.h"
 
-1645437252 c:\users\hp\desktop\dictionnaire-master\dico.h
+1645866781 c:\users\hp\desktop\dictionnaire-master\dico.h
 	"arbre.h"
 
-1645437354 source:c:\users\hp\desktop\dictionnaire-master\main.c
+1645874564 source:c:\users\hp\desktop\dictionnaire-master\main.c
 	<stdio.h>
 	<stdlib.h>
 	<time.h>

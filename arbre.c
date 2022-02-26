@@ -9,7 +9,7 @@ Arbre arbreConsVide()
     Arbre A ;
 
     A= malloc(sizeof(Arbre));
-    A->c='\0';
+    A->c='a';
     A->FD =NULL;
     A->FG =NULL;
     return A;

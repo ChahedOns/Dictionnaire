@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -7,9 +6,7 @@
 
 
 
-
 void dicoAfficher(Arbre a){
-
     char ch[]="";
     int i=0;
     Arbre p=NULL , aux ;
@@ -48,36 +45,62 @@ void dicoAfficher(Arbre a){
     }
 }
 
-void dicoInsererMot(char mot[], Arbre* a /*passage par variable*/ ){
-    char rest[strlen(mot)];
-        Arbre m=arbreCons(mot[1],0,NULL,NULL);
-        if ( (*a)->c == m->c){
-            //même lettre je passe  gauche
-            strncpy(rest,mot+1,strlen(mot)-1);
-            free(m);
-            dicoInsererMot(rest , (*a)->FG);}
-        else if ((*a)->c < m->c){
-                //Recherche la bonne place à droite!
-            if ((*a)->FD == NULL){
-                    //Nouvelle mot a droite!
-                    (*a)->FD=m;
-                    Arbre c = m;
-                    //Place bien trouvée! j'ajoute le rest !
-                    int i= 0;
-                    while (i<strlen(mot)){
-                        Arbre aux = arbreCons(mot[i],0,NULL,NULL);
-                        c->FG = aux;
-                        c=aux;
-                        i++;
-                        }
-                    //dernier noeud doit être \0
-                    Arbre last =arbreCons('\0',1,NULL,NULL);
-                    c->FG = last;}
-            else{
-                //suppéieur et not égal la racine je passe a droite(recherche la bonne place)
-                *(a)=(*a)->FD;}
+void dicoInsererMot(char mot[], Arbre* a,int len,int cpt){
+
+Arbre aux = *a;
+
+if(len == -1){
+    aux->FG = arbreCons('\0', 0, NULL, NULL);
+    return;
+}else if(cpt == 0){
+    if(aux->c != mot[0]){
+    Arbre tracker;
+    while(aux->c != mot[0] && aux->FD != NULL && mot[0] > aux->c){
+        tracker = aux;
+        aux = aux->FD;
+    }
+    if(aux->c < mot[0] && aux->FD == NULL){
+        aux->FD = arbreCons(mot[cpt],0,NULL,NULL);
+        dicoInsererMot(mot,&aux->FD,len-1,cpt+1);
+
+    }else if(aux->c > mot[0]){
+         Arbre temp = arbreCons(mot[cpt],0,NULL,NULL);
+         tracker->FD = temp;
+         temp->FD = aux;
+         dicoInsererMot(mot,&temp,len-1,cpt+1);
+
+    }else{
+        dicoInsererMot(mot,&aux,len-1,cpt+1);
+    }
+
+    }
+}else{
+    if(aux->c == mot[cpt-1]){
+        if(aux->FG==NULL){
+            aux->FG = arbreCons(mot[cpt],0,NULL,NULL);
+            dicoInsererMot(mot,&aux->FG,len-1,cpt+1);
+        }else if(aux->FG->c == mot[cpt]){
+            dicoInsererMot(mot,&aux->FG,len-1,cpt+1);
+        }else{
+            aux->FD = arbreCons(mot[cpt],0,NULL,NULL);
+            dicoInsererMot(mot,&aux->FD,len-1,cpt+1);
         }
+    }
 }
+}
+
+void printPreorder(Arbre a)
+{
+    if (a == NULL)
+        return;
+
+    printf("%c ", a->c);
+
+    printPreorder(a->FG);
+
+    printPreorder(a->FD);
+}
+
 
 int dicoNbOcc(char mot[], Arbre a){
 char rest[strlen(mot)];
@@ -146,9 +169,4 @@ int piocherMot(char *motPioche)
      motPioche[strlen(motPioche) - 1] = '\0';
      fclose(dico);
      return 1; // Tout s'est bien passé, on retourne 1
-}
-void printArbre(Arbre a){
-    printf("%c",a->c);
-    printArbre(a->FG);
-    printArbre(a->FD);
 }
